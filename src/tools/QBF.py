@@ -131,8 +131,7 @@ class QBF:
         t0 = time()
         res = run_command(solver + " " + name)
         t = time() - t0
-        print (res)
-        return t
+        return t, res
 
 
 

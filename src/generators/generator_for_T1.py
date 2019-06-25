@@ -21,7 +21,7 @@ def number_to_encoding(var_n):
 def generate_ChenType1(n):
 
     num_vars = 9*n + 4
-    num_clauses = 3*n + 1
+    num_clauses = 12*n + 6
     phi = QBF(num_vars, num_clauses, "Type1_size{}".format(n))
 
     generate_quantifier_blocks(phi, n)
