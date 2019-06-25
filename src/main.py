@@ -5,6 +5,8 @@ Created on Tue Jun 25 11:22:56 2019
 
 @author: noel
 """
+from time import time
+
 from tools.QBF import QBF
 from tools.system_tools import run_command, clear
 from generators.generator_for_T1 import generate_ChenType1
@@ -51,4 +53,21 @@ def run_type1_test():
 def run_type2_test():
     print("TO BE IMPLEMENTED. TRY AGAIN")
 
-main_for_user()
+#main_for_user()
+
+generate = list()
+solve = list()
+for i in range(1, 300):
+    
+    
+    t0 = time()
+    phi = generate_ChenType1(i)
+    t = time() - t0
+    generate.append(t)
+    print("Time for generate size n = {}: {} s".format(i, t))
+
+    t = phi.check_satisfiability()
+    solve.append(t)
+    print("Time for solving size n = {}: {} s".format(i, t))
+    
+    

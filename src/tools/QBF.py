@@ -3,6 +3,7 @@
 
 from .system_tools import run_command
 import os
+from time import time
 
 class QBF:
 
@@ -127,8 +128,11 @@ class QBF:
     def check_satisfiability(self, solver='depqbf'):
         name = 'forTesting_' + self.name + '.txt'
         name = self.print_formula(mode='QDIMACS', output='file', filename=name)
+        t0 = time()
         res = run_command(solver + " " + name)
+        t = time() - t0
         print (res)
+        return t
 
 
 
