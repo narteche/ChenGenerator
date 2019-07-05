@@ -22,7 +22,7 @@ def generate_ChenType1(n):
 
     num_vars = 9*n + 4
     num_clauses = 12*n + 6
-    phi = QBF(num_vars, num_clauses, "Type1_size{}".format(n))
+    phi = QBF(num_vars, num_clauses, "type1_size{}".format(n))
 
     generate_quantifier_blocks(phi, n)
     generate_B_clauses(phi, n)

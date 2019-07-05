@@ -116,7 +116,8 @@ class QBF:
             if filename == None:
                 filename = self.name + ".txt"
 
-            filename = os.path.join('./output_files', filename)
+            #filename = os.path.join('./output_files', filename)
+            filename = "./output_files/" + filename
             file = open(filename, 'w')
             file.write(result)
             file.close()
