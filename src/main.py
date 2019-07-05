@@ -82,6 +82,7 @@ def run_repeated_tests():
                 t, res = phi.check_satisfiability()
                 solve.append(t)
                 print("Time for solving size n = {}: {} s".format(i, t))
+                print("print res")
                 print(res)
             
             r_n1 =list()

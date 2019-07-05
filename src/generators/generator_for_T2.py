@@ -22,7 +22,6 @@ def generate_ChenType2(n):
     return phi
 
 def generate_quantifier_blocks(phi, n):
-    
     i = 1
     while i in range(1, 2*n + 1):
         phi.add_quantifier_block('e', [i])
@@ -30,23 +29,11 @@ def generate_quantifier_blocks(phi, n):
         i += 2
         
 def generate_clauses(phi, n):
-    
-    for i in range(1, 2*n + 1):
-        
+    for i in range(0, 2*n):
         if is_congruent(i, n, 3):
-            C = combinations(range(1, 2*n + 1), i)
-            
-            for comb in C:
-                new_clause = list()
-                comb_index = 0
-                for next_var in range(1, 2*n + 1):
-                    if (comb_index in range(len(comb))) and (comb[comb_index] == next_var):
-                        new_clause.append(-comb[comb_index])
-                        comb_index += 1
-                    else:
-                        new_clause.append(next_var)
-                
+            for comb in combinations(range(1, 2*n + 1), i):
+                new_clause = list(range(1, 2*n + 1))
+                for var in comb:
+                    new_clause[var - 1] = -var
                 phi.add_clause(new_clause, isNew=True)
                 
-f = generate_ChenType2(9)
-f.print_formula(mode='QDIMACS', output='file', filename='hey')
