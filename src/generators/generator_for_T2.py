@@ -10,7 +10,19 @@ from itertools import combinations
 ###############################################################################
 
 def generate_ChenType2(n):
-
+    """
+    Generates a Type 2 Chen Formula for the value n.
+    
+    NOTE: this is the only function in this module that should be invoked
+          outside of it.
+    
+    -Input-: an integer n
+    -Precondition-: n ≥ 1
+    -Output-: a QBF object
+    -Postcondition-: the formula returned is a Chen Formula of Type 2 for size n
+    -Cost-: Θ(4^n)
+    """
+    
     num_vars = 2*n
     num_clauses = 0 # to be updated later
     phi = QBF(num_vars, num_clauses, "type2_size{}".format(n))
@@ -26,6 +38,7 @@ def generate_ChenType2(n):
 # =================== Internal functions for the generator ================== #
     
 def is_congruent(a, b, n):
+    
     """
     Checks whether a is congruent with b mod n.
     
