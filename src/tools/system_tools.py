@@ -1,27 +1,33 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-Created on Tue Jun 25 11:25:59 2019
 
-@author: noel
-"""
-
+# Imports:
 import os
-from time import sleep
-from os import system, name
+
+###############################################################################
+#================================ SYSTEM TOOLS ===============================#
+###############################################################################
 
 def run_command(command):
+    """
+    Runs the specified command in the input string and returns a string with
+    the output.
+    """
+    
     call = os.popen(command)
     output = call.read()
     call.close()
     return output
 
 def clear():
+    """
+    Clears the Python terminal both on Windows and Linux.    
+    """
 
     # for windows
-    if name == 'nt':
-        _ = system('cls')
+    if os.name == 'nt':
+        _ = os.system('cls')
 
     # for mac and linux(here, os.name is 'posix')run java 
     else:
-        _ = system('clear')
+        _ = os.system('clear')

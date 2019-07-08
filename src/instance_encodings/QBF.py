@@ -1,9 +1,14 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from .system_tools import run_command
+# Imports:
+from tools.system_tools import run_command
 from time import time
 import os
+
+###############################################################################
+#================================= QBF Class =================================#
+###############################################################################
 
 class QBF:
     """
@@ -53,8 +58,8 @@ class QBF:
         Sets a new list of clauses for the formula.
     
     add_clause(C, isNew=False)
-        Adds a clause C to the list of clauses. If isNew=True, then the variable
-        counter is incremented.
+        Adds a clause C to the list of clauses. If isNew is True, then the
+        variable counter is incremented.
     
     add_quantifier_block(Q, X)
         Adds a quantifier block with quantifier Q and variables X.
@@ -67,13 +72,13 @@ class QBF:
     
     convert(to='QDIMACS')
         Converts the formula to a string in some standard format, such as
-        QDIMACS or QCIR.
+        QDIMACS or QCIR (only QDIMACS supported at the moment).
         
     print_formula(mode='default', output='stdIO', filename=None)
         Prints the formula in the specified mode (normal for 'default' or QDIMACS
         or QCIR otherwise), either in the standard output or onto a text file.
         
-    check_satisfiability(self, solver='depqbf')
+    check_satisfiability(self, solver='depqbf', time=True)
         Checks the satisfiability of the formula on a specified QBF solver
         (depqbf if not specified otherwise). Returns on a string the output
         of the solver and the time required to check the satisfiability in seconds.
@@ -82,11 +87,11 @@ class QBF:
     """
 
     def __init__(self, n, m, name=""):
-        self.n = n
-        self.m = m
-        self.prefix = list()
-        self.clauses = list()
-        self.name = name
+        self.n = n # number of variables
+        self.m = m # number of clauses
+        self.prefix = list() # quantifier vector
+        self.clauses = list() # formula matrix
+        self.name = name # name
 
     def get_n_vars(self):
         return self.n
@@ -127,6 +132,12 @@ class QBF:
         return B[1]
 
     def convert(self, to='QDIMACS'):
+        """
+        Converts the formula to a string enconding in the desired format, which
+        could be QDIMACS or QCIR (QCIR not yet supported) and returns that string.
+        
+        """
+        
         phi = self
         converted = ""
         
@@ -148,7 +159,7 @@ class QBF:
                 converted += clause + "\n"
         
         elif to == 'QCIR':
-            print("QCIR conversion not yet implemented.")
+            print("QCIR conversion is not yet implemented.")
         
         else:
             print("ERROR: unknown conversion format.")
@@ -156,6 +167,24 @@ class QBF:
         return converted
 
     def print_formula(self, mode='default', output='stdIO', filename=None):
+        """
+        Prints the formula in the desired format.
+        
+        -Parameters-:
+            - mode: -- 'default' for human readability
+                    -- 'QDIMACS' for QDIMACS
+                    -- 'QCIR' for QCIR (not yet supported)
+            - output: -- 'stdIO' for std. output; formulas with more than 100
+                      variables and/or clauses will not be printed.
+                      -- 'file' for a text file
+            - filename: used for the name of the file to be written on; it must
+                        include the desired extension. By default, all files
+                        are saved onto the ./output_files folder. If a name is not
+                        specified, the name will be formed using the name of the
+                        formula.
+        
+        """
+        
         result = ""
         
         # Convert the formula to a string.
@@ -187,42 +216,72 @@ class QBF:
             result = self.convert()
         
         elif mode == 'QCIR':
-            result= self.convert(to='QCIR')
+            result = self.convert(to='QCIR')
 
         else:
-            print("ERROR: Method not recognised.")
+            print("ERROR: Mode not recognised.")
             return
 
         # Output the formula:
         if output == "stdIO":
             if self.n > 100:
-                print("MESSAGE: Cannot print on StdO a formula with that many variables.")
+                print("MESSAGE: Cannot print on std. output a formula with more than 100 variables.")
+                return
+            elif self.m > 100:
+                print("MESSAGE: Cannot print on std. output a formula with more than 100 clauses.")
                 return
             else:
                 print(result)
                 
         elif output == "file":
-            if filename == None:
-                filename = self.name + ".txt" # should change this to .qdimacs or .qcir
-
+            if filename == None: # default filename
+                ext = ""
+                if mode == 'default':
+                    ext = ".out"
+                elif mode == 'QDIMACS':
+                    ext = ".qdimacs"
+                elif mode == 'QCIR':
+                    ext = ".qcir"
+                    
+                filename = self.name + ext
+                
             filename = "./output_files/" + filename
             file = open(filename, 'w')
             file.write(result)
             file.close()
+            
         else:
             print("ERROR: Incorrect output selection.")
             return
 
-    def check_satisfiability(self, solver='depqbf'):
-        name = 'forTesting_' + self.name + '.txt'
-        name = self.print_formula(mode='QDIMACS', output='file', filename=name)
+    def check_satisfiability(self, solver='depqbf', checkTime=True):
+        """
+        Checks the satisfiability of the formula on a given solver.
+        
+        NOTE: this method does not yet work on Windows.
+        
+        -Parameters-:
+            - solver: -- 'depqbf' for DepQBF
+                      -- [other solvers are not yet supported]
+            - checkTime: if True, it will return both the time consumed by the
+                        solver as well as the output of the solver.
+                        If False, it will just output the result of the
+                        solver (times in seconds).
+        
+        """
+        
         if os.name == 'nt':
             print("Running on Windows: cannot check satifiability.")
-            return
-        t0 = time()
-        res = run_command(solver + " " + name)
-        t = time() - t0
-        return t, res
-
-
-
+            return "", 0.0
+        
+        name = 'checking' + self.name + '.qdimacs'
+        name = self.print_formula(mode='QDIMACS', output='file', filename=name)
+        
+        if checkTime == True:
+            t0 = time()
+            res = run_command(solver + " " + name)
+            t = time() - t0
+            return res, t
+        else:
+            res = run_command(solver + " " + name)
+            return res

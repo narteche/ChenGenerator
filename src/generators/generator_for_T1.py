@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # Imports:
-from tools.QBF import QBF
+from instance_encodings.QBF import QBF
 
 ###############################################################################
 #============================ GENERATOR FOR TYPE 1 ===========================#
