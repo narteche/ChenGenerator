@@ -167,6 +167,7 @@ def generate_T_clauses(phi, n):
     appropriate T-clauses or a Chen Formula of Type 1 and size n.
     -Cost-: Θ(n)
     """
+    
     for i in range(1, n + 1):
         
         T_i = list()
