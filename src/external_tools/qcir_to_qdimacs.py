@@ -21,6 +21,8 @@ import pprint
 import argparse
 from collections import OrderedDict
 
+sys.setrecursionlimit(1000000000) #added by noel
+
 stop = pdb.set_trace
 
 def die(text): 

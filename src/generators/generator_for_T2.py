@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # Imports:
-from instance_encodings.QBF import QBF
+from instance_encodings.QBC import QBC
 from itertools import combinations
 
 ###############################################################################
@@ -18,17 +18,17 @@ def generate_ChenType2(n):
     
     -Input-: an integer n
     -Precondition-: n ≥ 1
-    -Output-: a QBF object
+    -Output-: a QBC object
     -Postcondition-: the formula returned is a Chen Formula of Type 2 for size n
-    -Cost-: Θ(4^n)
+    -Cost-: Θ(n)
     """
     
     num_vars = 2*n
-    num_clauses = 0 # to be updated later
-    phi = QBF(num_vars, num_clauses, "type2_size{}".format(n))
+    num_gates = 15*n - 11
+    phi = QBC(num_vars, num_gates, name="type2_size{}".format(n))
 
     generate_quantifier_blocks(phi, n)
-    generate_clauses(phi, n)
+    generate_gates(phi, n)
 
     return phi
 
@@ -36,56 +36,72 @@ def generate_ChenType2(n):
 ###############################################################################
 
 # =================== Internal functions for the generator ================== #
-    
-def is_congruent(a, b, n):
-    
-    """
-    Checks whether a is congruent with b mod n.
-    
-    -Input-: integers a, b and n
-    -Precondition-: a, b ≥ 0, n ≥ 1
-    -Output-: Boolean value
-    -Postcondition-: returns True iff a ≡ b (mod n)
-    -Cost-: Θ(1)
-    """
-    
-    return (a % n) == (b % n)
 
 def generate_quantifier_blocks(phi, n):
     """
     Generates the quantifier block on phi.
     
-    -Input-: a QBF object phi and an integer n
+    -Input-: a QBC object phi and an integer n
     -Precondition-: n ≥ 1
     -Output-: -
-    -Postcondition-: the phi QBF object is updated with the prefix quantifier
+    -Postcondition-: the phi QBC object is updated with the prefix quantifier
     vector of a Chen Formula of Type 2 and size n.
     -Cost-: Θ(n)
     """
     
-    i = 1
-    while i in range(1, 2*n + 1):
-        phi.add_quantifier_block('e', [i])
-        phi.add_quantifier_block('a', [i + 1])
-        i += 2
+    for i in range(1, n + 1):
+        phi.add_quantifier_block('e', ['x' + str(i)])
+        phi.add_quantifier_block('a', ['y' + str(i)])
         
-def generate_clauses(phi, n):
+def generate_gates(phi, n):
     """
-    Generates the clauses on the formula.
+    Generates the gates on the circuit.
     
-    -Input-: a QBF object phi and an integer n
+    -Input-: a QBC object phi and an integer n
     -Precondition-: n ≥ 1
     -Output-: -
-    -Postcondition-: the phi QBF object is updated with the conjunction of the
-    appropriate clauses of a Chen Formula of Type 2 and size n.
-    -Cost-: Θ(4^n)
+    -Postcondition-: the phi QBC object is updated with the appropriate gates
+    of a Chen Formula of Type 2 and size n.
+    -Cost-: Θ(n)
     """
     
-    for i in range(0, 2*n + 1):
-        if is_congruent(i, n, 3):
-            for comb in combinations(range(1, 2*n + 1), i):
-                new_clause = list(range(1, 2*n + 1))
-                for var in comb:
-                    new_clause[var - 1] = -var
-                phi.add_clause(new_clause, isNew=True)
+    s_1_0 = 's_{}_{}'.format(1, 0)
+    s_1_1 = 's_{}_{}'.format(1, 1)
+    s_1_2 = 's_{}_{}'.format(1, 2)
+    phi.add_gate(s_1_0, 'and', ['-x' + str(1), '-y' + str(1)])
+    phi.add_gate(s_1_1, 'xor', ['x' + str(1), 'y' + str(1)])
+    phi.add_gate(s_1_2, 'and', ['x' + str(1), 'y' + str(1)])
+
+    for k in range(2, n + 1):
+        
+        adder_k_0 = 'adder_{}_{}'.format(k, 0)
+        adder_k_1 = 'adder_{}_{}'.format(k, 1)
+        adder_k_2 = 'adder_{}_{}'.format(k, 2)
+        phi.add_gate(adder_k_0, 'and', ['-x' + str(k), '-y' + str(k)])
+        phi.add_gate(adder_k_1, 'xor', ['x' + str(k), 'y' + str(k)])
+        phi.add_gate(adder_k_2, 'and', ['x' + str(k), 'y' + str(k)])
+        
+        for m in [0, 1, 2]:
+            
+            aux_k_0 = 'aux_{}_{}_{}'.format(k, m, 0)
+            aux_k_1 = 'aux_{}_{}_{}'.format(k, m, 1)
+            aux_k_2 = 'aux_{}_{}_{}'.format(k, m, 2)
+            
+            if m == 0:
+                phi.add_gate(aux_k_0, 'and', ['s_{}_0'.format(k-1), 'adder_{}_0'.format(k)])
+                phi.add_gate(aux_k_1, 'and', ['s_{}_1'.format(k-1), 'adder_{}_2'.format(k)])
+                phi.add_gate(aux_k_2, 'and', ['s_{}_2'.format(k-1), 'adder_{}_1'.format(k)])
+            elif m == 1:
+                phi.add_gate(aux_k_0, 'and', ['s_{}_0'.format(k-1), 'adder_{}_1'.format(k)])
+                phi.add_gate(aux_k_1, 'and', ['s_{}_1'.format(k-1), 'adder_{}_0'.format(k)])
+                phi.add_gate(aux_k_2, 'and', ['s_{}_2'.format(k-1), 'adder_{}_2'.format(k)])
+            else:
+                phi.add_gate(aux_k_0, 'and', ['s_{}_0'.format(k-1), 'adder_{}_2'.format(k)])
+                phi.add_gate(aux_k_1, 'and', ['s_{}_1'.format(k-1), 'adder_{}_1'.format(k)])
+                phi.add_gate(aux_k_2, 'and', ['s_{}_2'.format(k-1), 'adder_{}_0'.format(k)])
+                
+            s_k_m = 's_{}_{}'.format(k, m)
+            phi.add_gate(s_k_m, 'or', [aux_k_0, aux_k_1, aux_k_2])
+        
+    phi.set_output_gate('-s_{}_{}'.format(n, n % 3))
                 

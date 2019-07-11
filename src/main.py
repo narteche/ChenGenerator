@@ -58,9 +58,7 @@ def mode_2():
     print("This mode will generate and print a Type 2 formula.")
     n = input("[Enter a value for n (≥ 1)] ---> n = ")
     output = input("[Enter 'stdIO' for printing in standard output or a filename for a file] ---> ")
-    mode = input("[Enter a format - 'QDIMACS', 'QCIR', 'default'] ---> ")
-    checkSat = ("[Select wheter you want to check satisfiability: 'no' or a solver's name] ---> ")
-    tests.T2_simple_test(n, output, mode, checkSat)
+    tests.T2_simple_test(n, output)
     
 def mode_3():
     clear()

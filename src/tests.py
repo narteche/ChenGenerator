@@ -20,17 +20,17 @@ def T1_simple_test(n, output, mode, checkSat):
     r, t = phi.check_satisfiability(solver=checkSat)
     print("Satisfiability results: {}, in {} seconds.".format(r, t))
     
-def T2_simple_test(n, output, mode, checkSat):
+def T2_simple_test(n, output):
     phi = generate_ChenType2(int(n))
     filename = None
     if output != "stdIO":
         filename = output
         output = 'file'
-    phi.print_formula(mode, output, filename)
-    if checkSat == "no":
-        return
-    r, t = phi.check_satisfiability(solver=checkSat)
-    print("Satisfiability results: {}, in {} seconds.".format(r, t))
+    phi.print_formula(output, filename)
+    #if checkSat == "no":
+    #    return
+    #r, t = phi.check_satisfiability(solver=checkSat)
+    #print("Satisfiability results: {}, in {} seconds.".format(r, t))
     
 def T1_repeated_tests(n, displayData=True):
     n = int(n)
