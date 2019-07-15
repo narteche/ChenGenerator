@@ -1,0 +1,27 @@
+#QCIR-14
+# Circuit name: type2_size2
+# Num. vars.: 4
+# Num. gates: 19
+exists(x1)
+forall(y1)
+exists(x2)
+forall(y2)
+output(-s_2_2)
+s_1_0 = and(-x1, -y1)
+s_1_1 = xor(x1, y1)
+s_1_2 = and(x1, y1)
+adder_2_0 = and(-x2, -y2)
+adder_2_1 = xor(x2, y2)
+adder_2_2 = and(x2, y2)
+aux_2_0_0 = and(s_1_0, adder_2_0)
+aux_2_0_1 = and(s_1_1, adder_2_2)
+aux_2_0_2 = and(s_1_2, adder_2_1)
+s_2_0 = or(aux_2_0_0, aux_2_0_1, aux_2_0_2)
+aux_2_1_0 = and(s_1_0, adder_2_1)
+aux_2_1_1 = and(s_1_1, adder_2_0)
+aux_2_1_2 = and(s_1_2, adder_2_2)
+s_2_1 = or(aux_2_1_0, aux_2_1_1, aux_2_1_2)
+aux_2_2_0 = and(s_1_0, adder_2_2)
+aux_2_2_1 = and(s_1_1, adder_2_1)
+aux_2_2_2 = and(s_1_2, adder_2_0)
+s_2_2 = or(aux_2_2_0, aux_2_2_1, aux_2_2_2)
