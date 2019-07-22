@@ -13,9 +13,9 @@ n = int(n)
 
 filename = "./output_files/" + "times_generate_2.txt"
 file = open(filename, 'w')
-for i in range(n, n + 1):
+for i in range(1, n + 1):
     print("Generating... (n = {})".format(i))
-    file.write("n = {}\n".format(i))
+    
     t0 = time()
     phi = generate_ChenType2(i)
     t = time() - t0

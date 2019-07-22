@@ -169,7 +169,7 @@ class QBC:
         converted = ""
         
         # preamble
-        converted += "#QCIR-14\n"
+        converted += "#QCIR-G14\n"
         converted += "# Circuit name: {}\n".format(phi.get_name())
         converted += "# Num. vars.: {}\n".format(phi.get_n_vars())
         converted += "# Num. gates: {}\n".format(phi.get_n_gates())
