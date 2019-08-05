@@ -10,7 +10,6 @@ The content of each folder is:
 
 * `/articles`: some of the articles used for the documentation of the project. It contains Chen's original paper.
 * `/documentation`: contains a PDF document with the report of the project, descussing the formulas, how they were built and experimental results regarding their performance on available QBF solvers.
-* `/formulas`: Type 1 and Type 2 formulas for sizes between n = 1 and n = 5000 in QCIR and QDIMACS.
 * `/generators`: Python scripts for running the generators. Next section explains how to run them.
 * `/src`: internal code and tools used for the development of the generators.
 
@@ -35,6 +34,3 @@ python3 generate_T2.py n -QDIMACS [filename]
 ```
 
 The  first  argument  is  the  value  of n. The second  argument  is  either `-QCIR` or `-QDIMACS`, and it specifies the format in which the formula has to be written. The third argument is the name of a file. If not given, it will print the generated formula on the standard output, though it will not print formulas with more than 100 variables or clauses.
-
-## Available formulas
-The repository already contains Type 1 and Type 2 formulas for sizes between n = 1 and n = 5000. These are available in the `/formulas` forlder. Type 1 formulas are available in QDIMACS, while Type 2 formulas are available in QCIR and QDIMACS.
