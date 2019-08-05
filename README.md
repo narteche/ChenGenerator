@@ -8,8 +8,8 @@ This repository contains Python code for a generator of QBF instances of the two
 ## Contents
 The content of each folder is:
 
-* `/documentation`: contains a PDF document with the report of the project, descussing the formulas, how they were built and experimental results regarding their performance on available QBF solvers.
 * `/articles`: some of the articles used for the documentation of the project. It contains Chen's original paper.
+* `/documentation`: contains a PDF document with the report of the project, descussing the formulas, how they were built and experimental results regarding their performance on available QBF solvers.
 * `/formulas`: Type 1 and Type 2 formulas for sizes between n = 1 and n = 5000 in QCIR and QDIMACS.
 * `/generators`: Python scripts for running the generators. Next section explains how to run them.
 * `/src`: internal code and tools used for the development of the generators.
