@@ -17,9 +17,9 @@ The content of each folder is:
 
 
 ## How to run the generators
-The generators are two Python scripts: `generate_T1.py` and `generate_T2.py`. There can be found in the ```/generators``` folder.
+The generators are two Python scripts: `generate_T1.py` and `generate_T2.py`. These can be found in the ```/generators``` folder.
 
-To run the Type 1 generator, one must run the `generate_T1.py` script. The command is the followiing:
+To run the Type 1 generator, one must run the `generate_T1.py` script. The command is the following:
 
 ```
 python3 generate_T1.py n [filename]
@@ -34,7 +34,7 @@ python3 generate_T2.py n -QCIR [filename]
 python3 generate_T2.py n -QDIMACS [filename]
 ```
 
-The  first  argument  is  the  value  of n. The second  argument  is  either `-QCIR` or `-QDIMACS`, and it specifies the format in which the formula has to be written. The third argument is the name of a file. If not given, it will print the generated formula on the standard output, though it will not print formulaswith more than 100 variables or clauses.
+The  first  argument  is  the  value  of n. The second  argument  is  either `-QCIR` or `-QDIMACS`, and it specifies the format in which the formula has to be written. The third argument is the name of a file. If not given, it will print the generated formula on the standard output, though it will not print formulas with more than 100 variables or clauses.
 
 ## Available formulas
 The repository already contains Type 1 and Type 2 formulas for sizes between n = 1 and n = 5000. These are available in the `/formulas` forlder. Type 1 formulas are available in QDIMACS, while Type 2 formulas are available in QCIR and QDIMACS.
