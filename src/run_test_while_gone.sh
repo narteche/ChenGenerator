@@ -1,52 +1,39 @@
-# ======================================= QUABS ==================================== #
-echo === QUABS 1 ===
-time python3 solver_test_QUABS.py
-mv ./output_files/quabs_times1.txt ./output_files/quabs_times3.txt
-clear
-# ================================================================================== #
-echo === QUABS 2 ===
-time python3 solver_test_QUABS.py
-mv ./output_files/quabs_times1.txt ./output_files/quabs_times2.txt
-clear
-# ================================================================================== #
-echo === QUABS 3 ===
-time python3 solver_test_QUABS.py
-clear
-# ================================================================================== #
-# ================================================================================== #
+# ======================================= GENERATE ==================================== #
+echo GENERATING
+time python3 simple_generator.py
 
-
-# ======================================= CQESTO =================================== #
-echo === CQESTO 1 ===
-time python3 solver_test_CQESTO.py
-mv ./output_files/cqesto_times1.txt ./output_files/cqesto_times3.txt
-clear
-# ================================================================================== #
-echo === CQESTO 2 ===
-time python3 solver_test_CQESTO.py
-mv ./output_files/cqesto_times1.txt ./output_files/cqesto_times2.txt
-clear
-# ================================================================================== #
-echo === CQESTO 3 ===
-time python3 solver_test_CQESTO.py
-clear
-# ================================================================================== #
-# ================================================================================== #
-
-
-# ======================================= DEPQBF =================================== #
+# ======================================= DEBQBF ==================================== #
 echo === DEPQBF 1 ===
 time python3 solver_test_DEPQBF.py
-mv ./output_files/depqbf_new_times1.txt ./output_files/depqbf_new_times3.txt
-clear
+mv ./output_files/depqbf_t2_times1.txt ./output_files/depqbf_t2_times3.txt
+
 # ================================================================================== #
 echo === DEPQBF 2 ===
 time python3 solver_test_DEPQBF.py
-mv ./output_files/depqbf_new_times1.txt ./output_files/depqbf_new_times2.txt
-clear
+mv ./output_files/depqbf_t2_times1.txt ./output_files/depqbf_t2_times2.txt
+
 # ================================================================================== #
-echo === CQESTO 3 ===
+echo === DEPQBF 3 ===
 time python3 solver_test_DEPQBF.py
-clear
+
 # ================================================================================== #
 # ================================================================================== #
+
+
+# ======================================= CAQE ==================================== #
+echo === CAQE 1 ===
+time python3 solver_test_CAQE.py
+mv ./output_files/caqe_t2_times1.txt ./output_files/caqe_t2_times3.txt
+
+# ================================================================================== #
+echo === CAQE 2 ===
+time python3 solver_test_CAQE.py
+mv ./output_files/caqe_t2_times1.txt ./output_files/caqe_t2_times2.txt
+
+# ================================================================================== #
+echo === CAQE 3 ===
+time python3 solver_test_CAQE.py
+
+# ================================================================================== #
+# ================================================================================== #
+

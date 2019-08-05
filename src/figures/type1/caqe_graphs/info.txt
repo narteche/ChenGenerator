@@ -1,0 +1,6 @@
+polinomios:
+
+[ 5.03541792e-04 -1.01005162e-01  2.63327689e+00]
+[ 8.88462023e-07 -1.64249127e-04  2.16257664e-02 -1.47940774e-01]
+
+(ultima posicion es coeficiente director)
