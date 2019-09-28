@@ -398,7 +398,7 @@ class QBC:
                 phi.add_clause([x, -c], True)
                 phi.add_clause([y, -c], True)
         
-        phi.add_quantifier_block('e', aux_vars)
+        phi.add_quantifier_block('e', aux_vars) # this might be causing the exponential blow-up
         
         g = C.get_output_gate()
         op = ''
